@@ -1,0 +1,16 @@
+[INFO] Starting NixOS auto-configuration...
+[WARN] This tool generates basic configurations. Manual review and customization required!
+[WARN] Running as root. Some detection may not work properly.
+Authorization required, but no authorization protocol specified
+
+Can't open display :0
+[INFO] Detected CPU: [INFO] Detecting CPU architecture...
+intel
+[INFO] Detected GPU: [INFO] Detecting GPU...
+nvidia
+[INFO] Detected monitors: [INFO] Detecting monitors...
+eDP-1
+[INFO] Detected disks: [INFO] Detecting disk UUIDs...
+nvme0n1 
+mkdir: unrecognized option '--output'
+Try 'mkdir --help' for more information.
