@@ -1,4 +1,3 @@
-uilding the system configuration...
 warning: Git tree '/home/trav/nix-personal' is dirty
 error:
        … while calling the 'seq' builtin
@@ -15,9 +14,9 @@ error:
              |             ^
           334|         else
 
-       error: The option `hardware.intelgpu' does not exist. Definition values:
-       - In `/nix/store/0by88zglmpycrbnv4c7fvp3gd7hpm7rl-source/hosts/default/hardware.nix':
+       error: The option `hardware.network' does not exist. Definition values:
+       - In `/nix/store/rcjss1wm2f712h8ff65crzbp7c7nmh52-source/hosts/default/hardware.nix':
            {
-             driver = "i915";
+             enable = true;
            }
 Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
