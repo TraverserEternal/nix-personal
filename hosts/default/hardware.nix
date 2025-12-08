@@ -135,9 +135,7 @@
   hardware.pulseaudio.enable = false;  # Disable PulseAudio in favor of PipeWire
   security.rtkit.enable = true;  # Realtime kit for audio
 
-  # Network interfaces
-  # Basic network hardware support
-  hardware.network.enable = true;
+
 
   # Bluetooth support
   hardware.bluetooth = {
