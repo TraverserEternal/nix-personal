@@ -207,6 +207,11 @@ EOF
     fsType = "vfat";
   };
 
+EOF
+
+        # Configure swap based on availability
+        if [ "$swap_uuid" != "PLACEHOLDER" ] && [ -n "$swap_uuid" ]; then
+            cat >> "$output_dir/hardware.nix" << EOF
   swapDevices = [
     {
       device = "/dev/mapper/vg-swap";
@@ -217,6 +222,15 @@ EOF
       };
     }
   ];
+EOF
+        else
+            cat >> "$output_dir/hardware.nix" << EOF
+  # Swap file configuration (no swap partition detected)
+  swapDevices = [
+    { device = "/swapfile"; size = 4096; }
+  ];
+EOF
+        fi
 EOF
     else
         cat >> "$output_dir/hardware.nix" << EOF
@@ -232,11 +246,25 @@ EOF
     device = "/dev/disk/by-uuid/$boot_uuid";
     fsType = "vfat";
   };
+EOF
+
+        # Configure swap based on availability
+        if [ "$swap_uuid" != "PLACEHOLDER" ] && [ -n "$swap_uuid" ]; then
+            cat >> "$output_dir/hardware.nix" << EOF
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/$swap_uuid"; }
   ];
 EOF
+        else
+            cat >> "$output_dir/hardware.nix" << EOF
+
+  # Swap file configuration (no swap partition detected)
+  swapDevices = [
+    { device = "/swapfile"; size = 4096; }
+  ];
+EOF
+        fi
     fi
 
     cat >> "$output_dir/hardware.nix" << EOF
