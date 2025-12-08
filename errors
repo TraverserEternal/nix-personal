@@ -1,7 +1,23 @@
-nvme0n1
-│                                                                           
-├─nvme0n1p1
-│    vfat   FAT32       EB55-91E3                                           
-└─nvme0n1p2
-     ext4   1.0         7db32ea4-9977-45dd-9bda-3f7be6f7a65f  830.2G     4% /nix/store
-                                                                            /
+uilding the system configuration...
+warning: Git tree '/home/trav/nix-personal' is dirty
+error:
+       … while calling the 'seq' builtin
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:361:18:
+          360|         options = checked options;
+          361|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          362|         _module = checked (config._module);
+
+       … while calling the 'throw' builtin
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:333:13:
+          332|           else
+          333|             throw baseMsg
+             |             ^
+          334|         else
+
+       error: The option `hardware.intelgpu' does not exist. Definition values:
+       - In `/nix/store/0by88zglmpycrbnv4c7fvp3gd7hpm7rl-source/hosts/default/hardware.nix':
+           {
+             driver = "i915";
+           }
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
