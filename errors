@@ -16,20 +16,13 @@ error:
 
        … while evaluating the option `system.build.toplevel':
 
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
-
-       … while evaluating the option `assertions':
-
        … while evaluating definitions from `/nix/store/mkb9dv28vyy5v4dh466qivf65v7b9qqm-source/nixos/common.nix':
 
        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
 
        error: The option `home-manager.users.Trav.programs.thunar' does not exist. Definition values:
        - In `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix':
-           {
-             enable = true;
-             plugins = [
-               <derivation thunar-volman-4.20.0>
-               <derivation thunar-archive-plugin-0.6.0>
-           ...
-Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+
+FIXED: Removed invalid `programs.thunar` configuration from home.nix - Thunar should be configured at system level, not in Home Manager.
+
+FIXED: Commented out Firefox NUR extensions due to dependency issues - these can be added back when NUR is properly configured.

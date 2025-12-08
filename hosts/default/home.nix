@@ -180,16 +180,7 @@
     };
   };
 
-  # Thunar File Manager
-  # Lightweight, fast file manager with good GTK integration
-  programs.thunar = {
-    enable = true;
 
-    plugins = with pkgs.xfce; [
-      thunar-volman  # Volume management
-      thunar-archive-plugin  # Archive support
-    ];
-  };
 
   # Firefox Web Browser
   # Privacy-focused web browser with modern features
@@ -226,13 +217,13 @@
         "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"nav-bar":["back-button","forward-button","stop-reload-button","home-button","urlbar-container","downloads-button","library-button","sidebar-button","fxa-toolbar-menu-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"],"sidebar-box":["sidebar-header","sidebar-panel"]},"seen":["save-to-pocket-button","developer-button","profiler-button"],"dirtyAreaCache":["nav-bar","PersonalToolbar","toolbar-menubar","TabsToolbar","sidebar-box"],"currentVersion":18,"newElementCount":4}'';
       };
 
-      # Firefox extensions
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        ublock-origin  # Ad blocker
-        https-everywhere  # Force HTTPS
-        privacy-badger  # Tracking protection
-        decentralized-web  # IPFS support
-      ];
+      # Firefox extensions - commented out due to NUR dependency issues
+      # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      #   ublock-origin  # Ad blocker
+      #   https-everywhere  # Force HTTPS
+      #   privacy-badger  # Tracking protection
+      #   decentralized-web  # IPFS support
+      # ];
     };
   };
 
