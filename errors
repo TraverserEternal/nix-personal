@@ -1,3 +1,8 @@
+evaluation warning: Trav profile: The option `programs.git.userEmail' defined in `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix' has been renamed to `programs.git.settings.user.email'.
+evaluation warning: Trav profile: The option `programs.git.userName' defined in `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix' has been renamed to `programs.git.settings.user.name'.
+evaluation warning: Trav profile: The option `programs.git.extraConfig' defined in `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix' has been renamed to `programs.git.settings'.
+evaluation warning: The option `services.xserver.displayManager.defaultSession' defined in `/nix/store/i397qk7z72g4s2zfxyggv4qidryamdn4-source/hosts/default/configuration.nix' has been renamed to `services.displayManager.defaultSession'.
+evaluation warning: The option `hardware.pulseaudio' defined in `/nix/store/i397qk7z72g4s2zfxyggv4qidryamdn4-source/hosts/default/hardware.nix' has been renamed to `services.pulseaudio'.
 error:
        … while calling the 'head' builtin
          at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/attrsets.nix:1696:13:
@@ -17,19 +22,28 @@ error:
 
        … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
 
-       … while evaluating the option `warnings':
+       … while evaluating the option `system.systemBuilderArgs':
 
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/boot/systemd/tmpfiles.nix':
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/activatable-system.nix':
 
-       … while evaluating the option `systemd.tmpfiles.settings.graphics-driver."/run/opengl-driver"."L+".argument':
+       … while evaluating the option `system.activationScripts.etc.text':
 
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/hardware/graphics.nix':
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/etc/etc-activation.nix':
 
-       … while evaluating the option `hardware.graphics.extraPackages':
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/etc/etc.nix':
 
-       … while evaluating definitions from `/nix/store/mbwrbb9k3ig0mmkjf928j2kzss4g1fsb-source/hosts/default/hardware.nix':
+       … while evaluating the option `environment.etc.dbus-1.source':
+
+       … while evaluating the option `environment.systemPackages':
+
+       … while evaluating definitions from `/nix/store/i397qk7z72g4s2zfxyggv4qidryamdn4-source/hosts/default/configuration.nix':
 
        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
 
-       error: 'vaapiVdpau' has been renamed to/replaced by 'libva-vdpau-driver'
+       error: undefined variable 'thunar'
+       at /nix/store/i397qk7z72g4s2zfxyggv4qidryamdn4-source/hosts/default/configuration.nix:47:5:
+           46|     foot
+           47|     thunar
+             |     ^
+           48|   ];
 Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
