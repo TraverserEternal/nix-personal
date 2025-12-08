@@ -1,22 +1,35 @@
 warning: Git tree '/home/trav/nix-personal' is dirty
 error:
-       … while calling the 'seq' builtin
-         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:361:18:
-          360|         options = checked options;
-          361|         config = checked (removeAttrs config [ "_module" ]);
-             |                  ^
-          362|         _module = checked (config._module);
-
-       … while calling the 'throw' builtin
-         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:333:13:
-          332|           else
-          333|             throw baseMsg
+       … while calling the 'head' builtin
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/attrsets.nix:1696:13:
+         1695|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1696|             head values
              |             ^
-          334|         else
+         1697|           else
 
-       error: The option `hardware.network' does not exist. Definition values:
-       - In `/nix/store/rcjss1wm2f712h8ff65crzbp7c7nmh52-source/hosts/default/hardware.nix':
+       … while evaluating the attribute 'value'
+         at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/modules.nix:1118:7:
+         1117|     // {
+         1118|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1119|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
+
+       … while evaluating the option `assertions':
+
+       … while evaluating definitions from `/nix/store/mkb9dv28vyy5v4dh466qivf65v7b9qqm-source/nixos/common.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.Trav.programs.thunar' does not exist. Definition values:
+       - In `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/flake.nix':
            {
              enable = true;
-           }
+             plugins = [
+               <derivation thunar-volman-4.20.0>
+               <derivation thunar-archive-plugin-0.6.0>
+           ...
 Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
