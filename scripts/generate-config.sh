@@ -14,21 +14,21 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Logging functions
+# Logging functions (output to stderr to avoid polluting stdout)
 log_info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
+    echo -e "${BLUE}[INFO]${NC} $1" >&2
 }
 
 log_warn() {
-    echo -e "${YELLOW}[WARN]${NC} $1"
+    echo -e "${YELLOW}[WARN]${NC} $1" >&2
 }
 
 log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
+    echo -e "${RED}[ERROR]${NC} $1" >&2
 }
 
 log_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
+    echo -e "${GREEN}[SUCCESS]${NC} $1" >&2
 }
 
 # Function to detect CPU type
@@ -63,15 +63,13 @@ detect_monitors() {
 
 # Function to detect partition UUIDs and encryption type
 detect_partition_uuids() {
-    log_info "Detecting partition UUIDs and encryption status..."
-
-    # Get all partitions with their UUIDs and types
+    # Get all partitions with their UUIDs and types (suppress stderr for clean output)
     local partitions
-    partitions=$(lsblk -f -o NAME,UUID,FSTYPE 2>/dev/null | grep -E "^[a-zA-Z0-9-]+") || {
+    if ! partitions=$(lsblk -f -o NAME,UUID,FSTYPE 2>/dev/null | grep -E "^[a-zA-Z0-9-]+"); then
         log_warn "Could not detect partitions - lsblk failed"
         echo "boot_uuid=PLACEHOLDER root_uuid=PLACEHOLDER swap_uuid=PLACEHOLDER encryption_type=unknown"
         return
-    }
+    fi
 
     # Initialize variables
     local boot_uuid="" root_uuid="" swap_uuid=""
@@ -129,6 +127,8 @@ detect_partition_uuids() {
     elif [ "$has_plain_root" = true ]; then
         encryption_type="plain"
         log_info "System uses plain filesystems (no encryption detected)"
+    else
+        log_warn "No recognizable partitions found - using PLACEHOLDER values"
     fi
 
     # Set defaults if not found
