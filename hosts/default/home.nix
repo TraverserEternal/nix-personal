@@ -117,7 +117,8 @@
         "$mainMod, 5, workspace, 5"
       ];
 
-      monitor = ",preferred,auto,auto";
+      # Monitor configuration - let Hyprland auto-detect monitors
+      # monitor = ",preferred,auto,1";
     };
   };
 
