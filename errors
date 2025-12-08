@@ -1,4 +1,3 @@
-warning: Git tree '/home/trav/nix-personal' is dirty
 error:
        … while calling the 'head' builtin
          at /nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/lib/attrsets.nix:1696:13:
@@ -16,7 +15,7 @@ error:
 
        … while evaluating the option `system.build.toplevel':
 
-       … while evaluating definitions from `/nix/store/mkb9dv28vyy5v4dh466qivf65v7b9qqm-source/nixos/modules/system/activation/top-level.nix':
+       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
 
        … while evaluating the option `home-manager.users.Trav.home.file':
 
@@ -28,18 +27,10 @@ error:
 
        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
 
-       error: attribute 'vscode-json' missing
-       at /nix/store/lf76d3g15k3hxc03k87fsllk1i8rwd6v-source/hosts/default/home.nix:74:7:
-           73|       golang.go  # Go
-           74|       ms-vscode.vscode-json  # JSON
-             |       ^
+       error: attribute 'vscode-typescript-next' missing
+       at /nix/store/avkrm3ms2zv8p35zydymgdn0cz1qd01r-source/hosts/default/home.nix:76:7:
            75|       redhat.vscode-yaml  # YAML
-
-FIXED: Commented out invalid VSCode extension `ms-vscode.vscode-json` - extension name is incorrect or doesn't exist in current nixpkgs.
-
-PREVIOUS FIXES:
-FIXED: Removed invalid `actionButtons` and `actionKeybindings` options from Mako configuration - these options don't exist in current Home Manager Mako module.
-
-FIXED: Removed invalid `hardware.network.enable = true` from hardware.nix - this option doesn't exist in modern NixOS.
-FIXED: Removed invalid `programs.thunar` configuration from home.nix - Thunar should be configured at system level, not in Home Manager.
-FIXED: Commented out Firefox NUR extensions due to dependency issues - these can be added back when NUR is properly configured.
+           76|       ms-vscode.vscode-typescript-next  # TypeScript
+             |       ^
+           77|
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
