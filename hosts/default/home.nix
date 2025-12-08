@@ -73,7 +73,7 @@
       golang.go  # Go
       # ms-vscode.vscode-json  # JSON - extension name incorrect
       redhat.vscode-yaml  # YAML
-      ms-vscode.vscode-typescript-next  # TypeScript
+      # ms-vscode.vscode-typescript-next  # TypeScript - extension name incorrect
 
       # Development tools
       ms-vscode.vscode-git-graph  # Git visualization
