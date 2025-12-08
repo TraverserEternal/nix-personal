@@ -11,6 +11,8 @@
   # settings like boot loaders, file systems, and hardware enablement
   imports = [
     ./hardware.nix
+  ] ++ lib.optionals (builtins.pathExists ../modules/generated/hardware.nix) [
+    ../modules/generated/hardware.nix
   ];
 
   # Basic system information

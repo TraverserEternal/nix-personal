@@ -44,8 +44,8 @@
   # Essential development tool configuration
   programs.git = {
     enable = true;
-    userName = "User";  # Should be customized per user
-    userEmail = "user@example.com";  # Should be customized per user
+    userName = "TraverserEternal";  # Should be customized per user
+    userEmail = "kimball.bradford@gmail.com";  # Should be customized per user
 
     # Basic git settings for better development experience
     extraConfig = {

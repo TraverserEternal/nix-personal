@@ -46,9 +46,9 @@ detect_cpu() {
 # Function to detect GPU
 detect_gpu() {
     log_info "Detecting GPU..."
-    if lspci | grep -i nvidia > /dev/null; then
+    if lspci 2>/dev/null | grep -i nvidia > /dev/null; then
         echo "nvidia"
-    elif lspci | grep -i amd > /dev/null && lspci | grep -i vga | grep -i amd > /dev/null; then
+    elif lspci 2>/dev/null | grep -i amd > /dev/null && lspci 2>/dev/null | grep -i vga | grep -i amd > /dev/null; then
         echo "amd"
     else
         echo "intel"
@@ -58,7 +58,7 @@ detect_gpu() {
 # Function to detect monitors
 detect_monitors() {
     log_info "Detecting monitors..."
-    xrandr | grep " connected" | awk '{print $1}' || echo "eDP-1"
+    xrandr 2>/dev/null | grep " connected" | awk '{print $1}' || echo "eDP-1"
 }
 
 # Function to get disk UUIDs
@@ -285,7 +285,7 @@ EOF
 
 # Main function
 main() {
-    local output_dir="${1:-./hosts/auto-generated}"
+    local output_dir="${1:-./modules/generated}"
 
     log_info "Starting NixOS auto-configuration..."
     log_warn "This tool generates basic configurations. Manual review and customization required!"
