@@ -71,7 +71,7 @@
       ms-python.python  # Python
       rust-lang.rust-analyzer  # Rust
       golang.go  # Go
-      ms-vscode.vscode-json  # JSON
+      # ms-vscode.vscode-json  # JSON - extension name incorrect
       redhat.vscode-yaml  # YAML
       ms-vscode.vscode-typescript-next  # TypeScript
 

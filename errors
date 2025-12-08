@@ -16,7 +16,7 @@ error:
 
        … while evaluating the option `system.build.toplevel':
 
-       … while evaluating definitions from `/nix/store/cd6v80pj9h7r2prxx9a71y92zq88p1xx-source/nixos/modules/system/activation/top-level.nix':
+       … while evaluating definitions from `/nix/store/mkb9dv28vyy5v4dh466qivf65v7b9qqm-source/nixos/modules/system/activation/top-level.nix':
 
        … while evaluating the option `home-manager.users.Trav.home.file':
 
@@ -34,4 +34,12 @@ error:
            74|       ms-vscode.vscode-json  # JSON
              |       ^
            75|       redhat.vscode-yaml  # YAML
-Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."default".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+
+FIXED: Commented out invalid VSCode extension `ms-vscode.vscode-json` - extension name is incorrect or doesn't exist in current nixpkgs.
+
+PREVIOUS FIXES:
+FIXED: Removed invalid `actionButtons` and `actionKeybindings` options from Mako configuration - these options don't exist in current Home Manager Mako module.
+
+FIXED: Removed invalid `hardware.network.enable = true` from hardware.nix - this option doesn't exist in modern NixOS.
+FIXED: Removed invalid `programs.thunar` configuration from home.nix - Thunar should be configured at system level, not in Home Manager.
+FIXED: Commented out Firefox NUR extensions due to dependency issues - these can be added back when NUR is properly configured.
