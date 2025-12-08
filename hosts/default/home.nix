@@ -332,8 +332,8 @@
 
     # Action buttons
     actions = true;
-    actionButtons = true;
-    actionKeybindings = [ "button1" "button2" "button3" ];
+    # actionButtons = true;  # This option may not exist in current Home Manager
+    # actionKeybindings = [ "button1" "button2" "button3" ];  # This option may not exist in current Home Manager
 
     # Extra configuration
     extraConfig = ''
