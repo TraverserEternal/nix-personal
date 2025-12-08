@@ -128,8 +128,7 @@
   #   opencl.enable = true;  # OpenCL support for compute tasks
   # };
 
-  # Intel GPU Support (enabled by default for integrated graphics)
-  hardware.intelgpu.driver = "i915";  # Modern Intel driver
+
 
   # Audio Configuration
   # Basic audio setup; PipeWire will be configured in Phase 4

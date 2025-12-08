@@ -300,8 +300,7 @@ EOF
             ;;
         *)
             cat >> "$output_dir/hardware.nix" << EOF
-    # Intel integrated graphics
-    hardware.intelgpu.driver = "i915";
+    # Intel integrated graphics (handled automatically by hardware.graphics.enable)
 EOF
             ;;
     esac
