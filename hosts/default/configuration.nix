@@ -44,14 +44,14 @@
     wofi
     mako
     foot
-    thunar
+    xfce.thunar
   ];
 
   services.openssh.enable = true;
 
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "hyprland";
 
   programs.hyprland = {
     enable = true;

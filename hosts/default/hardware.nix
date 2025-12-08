@@ -132,7 +132,7 @@
 
   # Audio Configuration
   # Basic audio setup; PipeWire will be configured in Phase 4
-  hardware.pulseaudio.enable = false;  # Disable PulseAudio in favor of PipeWire
+  services.pulseaudio.enable = false;  # Disable PulseAudio in favor of PipeWire
   security.rtkit.enable = true;  # Realtime kit for audio
 
 

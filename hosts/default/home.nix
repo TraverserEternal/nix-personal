@@ -24,9 +24,9 @@
 
   programs.git = {
     enable = true;
-    userName = "TraverserEternal";
-    userEmail = "kimball.bradford@gmail.com";
-    extraConfig = {
+    settings = {
+      user.name = "TraverserEternal";
+      user.email = "kimball.bradford@gmail.com";
       init.defaultBranch = "main";
       pull.rebase = true;
       core.editor = "vim";
