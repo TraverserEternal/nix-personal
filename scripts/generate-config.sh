@@ -61,17 +61,81 @@ detect_monitors() {
     xrandr 2>/dev/null | grep " connected" | awk '{print $1}' || echo "eDP-1"
 }
 
-# Function to get disk UUIDs
-get_disk_uuids() {
-    log_info "Detecting disk UUIDs..."
-    lsblk -f | grep -E "^[a-z]" | awk '{print $1 " " $3}' || echo "PLACEHOLDER"
+# Function to detect partition UUIDs
+detect_partition_uuids() {
+    log_info "Detecting partition UUIDs..."
+
+    # Get all partitions with their UUIDs and types
+    local partitions
+    partitions=$(lsblk -f -o NAME,UUID,FSTYPE 2>/dev/null | grep -E "^[a-zA-Z0-9-]+") || {
+        log_warn "Could not detect partitions - lsblk failed"
+        echo "boot_uuid=PLACEHOLDER root_uuid=PLACEHOLDER swap_uuid=PLACEHOLDER"
+        return
+    }
+
+    # Initialize UUID variables
+    local boot_uuid="" root_uuid="" swap_uuid=""
+
+    # Parse partitions to find specific types
+    while IFS= read -r line; do
+        local name uuid fstype
+        name=$(echo "$line" | awk '{print $1}')
+        uuid=$(echo "$line" | awk '{print $2}')
+        fstype=$(echo "$line" | awk '{print $3}')
+
+        case $fstype in
+            vfat)
+                if [ -z "$boot_uuid" ]; then
+                    boot_uuid="$uuid"
+                    log_info "Detected EFI boot partition: $name (UUID: $uuid)"
+                fi
+                ;;
+            crypto_LUKS)
+                if [ -z "$root_uuid" ]; then
+                    root_uuid="$uuid"
+                    log_info "Detected LUKS root partition: $name (UUID: $uuid)"
+                elif [ -z "$swap_uuid" ]; then
+                    swap_uuid="$uuid"
+                    log_info "Detected LUKS swap partition: $name (UUID: $uuid)"
+                fi
+                ;;
+            swap)
+                if [ -z "$swap_uuid" ]; then
+                    swap_uuid="$uuid"
+                    log_info "Detected swap partition: $name (UUID: $uuid)"
+                fi
+                ;;
+        esac
+    done <<< "$partitions"
+
+    # Set defaults if not found
+    if [ -z "$boot_uuid" ]; then
+        log_warn "EFI boot partition not found - using PLACEHOLDER"
+        boot_uuid="PLACEHOLDER"
+    fi
+
+    if [ -z "$root_uuid" ]; then
+        log_warn "LUKS root partition not found - using PLACEHOLDER"
+        root_uuid="PLACEHOLDER"
+    fi
+
+    if [ -z "$swap_uuid" ]; then
+        log_warn "Swap partition not found - using PLACEHOLDER"
+        swap_uuid="PLACEHOLDER"
+    fi
+
+    # Return the UUIDs
+    echo "boot_uuid=$boot_uuid root_uuid=$root_uuid swap_uuid=$swap_uuid"
 }
 
 # Function to generate hardware.nix
 generate_hardware_nix() {
     local cpu_type=$1
     local gpu_type=$2
-    local output_dir=$3
+    local boot_uuid=$3
+    local root_uuid=$4
+    local swap_uuid=$5
+    local output_dir=$6
 
     log_info "Generating hardware.nix..."
 
@@ -96,7 +160,7 @@ generate_hardware_nix() {
   # LUKS Full Disk Encryption
   boot.initrd.luks.devices = {
     "root" = {
-      device = "/dev/disk/by-uuid/PLACEHOLDER";  # Replace with actual root partition UUID
+      device = "/dev/disk/by-uuid/$root_uuid";
       preLVM = true;
       allowDiscards = true;
     };
@@ -109,7 +173,7 @@ generate_hardware_nix() {
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/PLACEHOLDER";  # Replace with actual boot partition UUID
+    device = "/dev/disk/by-uuid/$boot_uuid";
     fsType = "vfat";
   };
 
@@ -119,7 +183,7 @@ generate_hardware_nix() {
       encrypted = {
         enable = true;
         label = "swap";
-        blkDev = "/dev/disk/by-uuid/PLACEHOLDER";  # Replace with actual swap partition UUID
+        blkDev = "/dev/disk/by-uuid/$swap_uuid";
       };
     }
   ];
@@ -299,28 +363,33 @@ main() {
     cpu_type=$(detect_cpu)
     gpu_type=$(detect_gpu)
     monitors=$(detect_monitors)
-    disks=$(get_disk_uuids)
+    uuid_output=$(detect_partition_uuids)
+
+    # Parse UUIDs from output
+    boot_uuid=$(echo "$uuid_output" | sed 's/.*boot_uuid=\([^ ]*\).*/\1/')
+    root_uuid=$(echo "$uuid_output" | sed 's/.*root_uuid=\([^ ]*\).*/\1/')
+    swap_uuid=$(echo "$uuid_output" | sed 's/.*swap_uuid=\([^ ]*\).*/\1/')
 
     log_info "Detected CPU: $cpu_type"
     log_info "Detected GPU: $gpu_type"
     log_info "Detected monitors: $monitors"
-    log_info "Detected disks: $disks"
+    log_info "Detected UUIDs - Boot: $boot_uuid, Root: $root_uuid, Swap: $swap_uuid"
 
     # Create output directory
     mkdir -p "$output_dir"
     log_info "Output directory: $output_dir"
 
     # Generate configuration files
-    generate_hardware_nix "$cpu_type" "$gpu_type" "$output_dir"
+    generate_hardware_nix "$cpu_type" "$gpu_type" "$boot_uuid" "$root_uuid" "$swap_uuid" "$output_dir"
     generate_configuration_nix "$output_dir"
     generate_home_nix "$output_dir"
 
     log_success "Configuration files generated successfully!"
     log_info "Next steps:"
-    echo "  1. Review and edit the generated files"
-    echo "  2. Replace PLACEHOLDER UUIDs with actual partition UUIDs"
-    echo "  3. Test with: nixos-rebuild build --flake .#$hostname"
-    echo "  4. Install with: nixos-rebuild switch --flake .#$hostname"
+    echo "  1. Review the generated files in $output_dir/"
+    echo "  2. If UUIDs show PLACEHOLDER, check partition detection or edit manually"
+    echo "  3. Test with: sudo nixos-rebuild build --flake .#default"
+    echo "  4. Install with: sudo nixos-rebuild switch --flake .#default"
 }
 
 # Run main function with all arguments

@@ -232,7 +232,6 @@
         https-everywhere  # Force HTTPS
         privacy-badger  # Tracking protection
         decentralized-web  # IPFS support
-        vimium  # Vim-like keyboard navigation
       ];
     };
   };
@@ -387,7 +386,6 @@
 
   # Basic productivity
     firefox  # Web browser
-    thunderbird  # Email client (optional)
 
     # UI Polish applications
     eww  # Status bar widgets
