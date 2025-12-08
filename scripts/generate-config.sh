@@ -63,9 +63,9 @@ detect_monitors() {
 
 # Function to detect partition UUIDs and encryption type
 detect_partition_uuids() {
-    # Get all partitions with their UUIDs and types (suppress stderr for clean output)
+    # Get all partitions with their UUIDs and types (list format, suppress stderr for clean output)
     local partitions
-    if ! partitions=$(lsblk -f -o NAME,UUID,FSTYPE 2>/dev/null | grep -E "^[a-zA-Z0-9-]+"); then
+    if ! partitions=$(lsblk -l -f -o NAME,UUID,FSTYPE 2>/dev/null | grep -E "^[a-zA-Z0-9]"); then
         log_warn "Could not detect partitions - lsblk failed"
         echo "boot_uuid=PLACEHOLDER root_uuid=PLACEHOLDER swap_uuid=PLACEHOLDER encryption_type=unknown"
         return
