@@ -9,6 +9,13 @@
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
+
+  # Enable DHCP for automatic IP assignment
+  networking.useDHCP = lib.mkDefault true;
+
+  # Configure DNS
+  networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
+
   time.timeZone = "UTC";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -18,6 +25,7 @@
     isNormalUser = true;
     description = "Main user account";
     extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
+    initialPassword = "temppass";  # Temporary password - change immediately after login
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -73,8 +81,12 @@
     pulse.enable = true;
   };
 
-  # Basic firewall
-  networking.firewall.enable = true;
+  # Firewall configuration - allow common internet traffic
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 80 443 ];  # SSH, HTTP, HTTPS
+    allowedUDPPorts = [ ];  # Add any UDP ports if needed
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking changes. This should be set to the

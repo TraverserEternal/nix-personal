@@ -47,7 +47,7 @@
       nixosConfigurations = {
         default = mkNixosConfig {
           hostname = "default";
-          username = "Trav";  # Replace with actual username
+          username = "trav";  # Replace with actual username
         };
       };
 
