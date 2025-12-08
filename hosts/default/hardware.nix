@@ -110,7 +110,7 @@
 
     # Extra packages for graphics acceleration
     extraPackages = with pkgs; [
-      vaapiVdpau  # Video acceleration
+      libva-vdpau-driver  # Video acceleration
       libvdpau-va-gl  # VDPAU to VAAPI wrapper
     ];
   };
