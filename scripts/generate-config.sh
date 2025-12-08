@@ -143,7 +143,7 @@ detect_partition_uuids() {
     fi
 
     if [ -z "$swap_uuid" ]; then
-        log_warn "Swap partition not found - using PLACEHOLDER"
+        log_info "No swap partition found - will use swap file instead"
         swap_uuid="PLACEHOLDER"
     fi
 
